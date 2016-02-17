@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import gk.android.investigator.Investigator;
-import gk.android.investigator.R;
 
 /**
  * No function, just to illustrate Investigator usage.

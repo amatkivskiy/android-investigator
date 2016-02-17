@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import gk.android.investigator.Investigator;
-import gk.android.investigator.R;
 
 /**
  * No function, just to illustrate Investigator usage.
