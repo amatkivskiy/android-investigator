@@ -11,6 +11,14 @@ import gk.android.investigator.Investigator;
  */
 public class App extends Application {
 
+    static {
+        Investigator.highlightInnerClasses = true;
+        Investigator.methodDepth = 0;
+        Investigator.tag = "Investigator";
+        // ...
+        // (You can of course configure them from anywhere.)
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
