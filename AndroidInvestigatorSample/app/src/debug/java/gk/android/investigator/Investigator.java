@@ -14,13 +14,6 @@ import android.util.Log;
  *
  * @author Gabor_Keszthelyi
  */
-// TODO link class javadoc in readme
-// TODO lib client init can be in any static initializer
-// TODO (optional) way to configure locally without git change
-// TODO readme: mention what it is not (logging solution) - only for investigation
-// TODO double-check inner classes, anonymous classes, lambdas
-// TODO is it possible to log method args (without name) automatically?
-// TODO check removePackageName possible problems (custom toString and dot not found or meaning somethig else)
 public class Investigator {
 
     /**
@@ -185,12 +178,17 @@ public class Investigator {
         return instanceName.substring(instanceName.lastIndexOf(".") + 1);
     }
 
-    // TODO Review this method. Value passing? Optimize?
+    // TODO Unit test
     private static String checkAndHighlightInnerClass(String instanceName) {
-        if (highlightInnerClasses && isInnerClass(instanceName)) {
-            instanceName = insertInnerClassHighlight(instanceName);
+        if (!highlightInnerClasses) {
+            return instanceName;
         }
-        return instanceName;
+        int symbolLocation = instanceName.indexOf(INNER_CLASS_TOSTRING_SYMBOL);
+        if (symbolLocation < 0) {
+            return instanceName;
+        } else {
+            return new StringBuilder(instanceName).deleteCharAt(symbolLocation).insert(symbolLocation, innerClassHighlightWord).toString();
+        }
     }
 
     private static boolean isInnerClass(String instanceName) {
