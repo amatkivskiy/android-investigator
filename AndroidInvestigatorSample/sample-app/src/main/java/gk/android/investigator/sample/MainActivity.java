@@ -99,17 +99,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addButton("Custom toString()-s", new View.OnClickListener() {
+        addButton("Overridden toString()", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customToStrings();
+                overriddenToString();
             }
         });
-    }
-
-    private void customToStrings() {
-        ClassWithToString john = new ClassWithToString("John", 55);
-        john.doSomething();
     }
 
     private void addButton(String text, View.OnClickListener onClickListener) {
@@ -168,6 +163,11 @@ public class MainActivity extends AppCompatActivity {
     private void stopWatch() {
         Investigator.startStopWatch(this);
         new Thread(LongerRunningTask.create()).start();
+    }
+
+    private void overriddenToString() {
+        ClassWithToString john = new ClassWithToString("John", 55);
+        john.doSomething();
     }
 
 }
