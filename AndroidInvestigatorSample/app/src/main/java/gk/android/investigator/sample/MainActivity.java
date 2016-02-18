@@ -1,26 +1,16 @@
 package gk.android.investigator.sample;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import gk.android.investigator.Investigator;
 
 /**
- * No function, just to illustrate Investigator usage.
- *
  * @author Gabor_Keszthelyi
  */
-// TODO review this
-public class MainActivity extends Activity implements FirstFragment.Callback {
-
-    private Button goToFirstFragmentButton;
+public class MainActivity extends AppCompatActivity {
 
     private String fruit = "cherry";
     private String nullVar = null;
@@ -29,14 +19,6 @@ public class MainActivity extends Activity implements FirstFragment.Callback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        goToFirstFragmentButton = (Button) findViewById(R.id.mainActivity_goToFirstFragmentButton);
-        goToFirstFragmentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Investigator.log(this);
-                onLoadFirstFragmentButtonClick();
-            }
-        });
 
         anonymousAndInnerClassExamples();
 
@@ -105,7 +87,6 @@ public class MainActivity extends Activity implements FirstFragment.Callback {
     }
 
 
-
     private void updateView() {
         Investigator.log(this);
     }
@@ -143,24 +124,6 @@ public class MainActivity extends Activity implements FirstFragment.Callback {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Investigator.log(this);
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Investigator.log(this, "item", item);
-        if (item.getItemId() == R.id.action_settings) {
-            goToSettingsActivity();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         Investigator.log(this);
@@ -195,24 +158,6 @@ public class MainActivity extends Activity implements FirstFragment.Callback {
     protected void onPause() {
         super.onPause();
         Investigator.log(this);
-    }
-
-    private void goToSettingsActivity() {
-        Investigator.startStopWatch(this);
-        Investigator.log(this);
-        startActivity(new Intent(this, SettingsActivity.class));
-    }
-
-    public void onLoadFirstFragmentButtonClick() {
-        Investigator.log(this);
-        goToFirstFragmentButton.setVisibility(View.GONE);
-        getFragmentManager().beginTransaction().add(R.id.mainActivity_root, new FirstFragment()).commit();
-    }
-
-    @Override
-    public void onGoToSecondFragmentButtonClick() {
-        Investigator.log(this);
-        getFragmentManager().beginTransaction().replace(R.id.mainActivity_root, new SecondFragment()).commit();
     }
 
     class MyAsyncTask extends AsyncTask<Void, Void, Void> {
