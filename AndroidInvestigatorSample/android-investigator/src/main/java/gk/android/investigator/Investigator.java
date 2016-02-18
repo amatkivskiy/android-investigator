@@ -175,8 +175,14 @@ public class Investigator {
         return String.format(patternInstanceAndMethod, instanceName, methodName);
     }
 
-    private static String removePackageName(String instanceName) {
-        return instanceName.substring(instanceName.lastIndexOf(".") + 1);
+    @VisibleForTesting
+    static String removePackageName(String instanceName) {
+        int lastDotIndex = instanceName.lastIndexOf(".");
+        if (lastDotIndex < 0 || lastDotIndex == instanceName.length() - 1) {
+            return instanceName;
+        } else {
+            return instanceName.substring(lastDotIndex + 1);
+        }
     }
 
     @VisibleForTesting
