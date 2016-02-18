@@ -98,6 +98,18 @@ public class MainActivity extends AppCompatActivity {
                 stopWatch();
             }
         });
+
+        addButton("Custom toString()-s", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customToStrings();
+            }
+        });
+    }
+
+    private void customToStrings() {
+        ClassWithToString john = new ClassWithToString("John", 55);
+        john.doSomething();
     }
 
     private void addButton(String text, View.OnClickListener onClickListener) {
