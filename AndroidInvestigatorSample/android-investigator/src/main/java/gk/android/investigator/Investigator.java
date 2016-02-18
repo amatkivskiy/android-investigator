@@ -55,7 +55,7 @@ public class Investigator {
     public static String newLine = "\n";
 
     private static final int STACKTRACE_INDEX_OF_CALLING_METHOD = 3; // fixed value, need to update only if the 'location' of the stack trace fetching code changes
-    private static final String INNER_CLASS_TOSTRING_SYMBOL = "$";
+    private static final String ANONYMOUS_CLASS_TOSTRING_SYMBOL = "$";
 
     private static boolean isStopWatchGoing;
 
@@ -190,7 +190,7 @@ public class Investigator {
         if (!highlightAnonymousClasses) {
             return instanceName;
         }
-        int symbolIndex = instanceName.indexOf(INNER_CLASS_TOSTRING_SYMBOL);
+        int symbolIndex = instanceName.indexOf(ANONYMOUS_CLASS_TOSTRING_SYMBOL);
         boolean hasSymbolPlusDigit = symbolIndex > 0 && instanceName.length() > symbolIndex + 1 && Character.isDigit(instanceName.charAt(symbolIndex + 1));
         if (hasSymbolPlusDigit) {
             return new StringBuilder(instanceName).deleteCharAt(symbolIndex).insert(symbolIndex, anonymousClassHighlightWord).toString();

@@ -19,12 +19,14 @@ import gk.android.investigator.Investigator;
 public class MainActivity extends AppCompatActivity {
 
     static {
-        // Changing defaults can be done anywhere.
+        // Changing defaults can be done from anywhere.
+        Investigator.threadNameEnabled = true;
         Investigator.methodDepth = 0;
         Investigator.tag = "Investigator";
         Investigator.logLevel = Log.DEBUG;
         Investigator.removePackageName = true;
         Investigator.highlightAnonymousClasses = true;
+        // ...
     }
 
     private ViewGroup holder;
