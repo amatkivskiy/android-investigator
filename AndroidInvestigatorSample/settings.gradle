@@ -1,1 +1,1 @@
-include ':app', ':android-investigator'
+include ':sample-app', ':android-investigator'
