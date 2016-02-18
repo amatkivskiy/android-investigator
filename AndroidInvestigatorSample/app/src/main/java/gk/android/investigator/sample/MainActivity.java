@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,9 +33,12 @@ public class MainActivity extends Activity implements FirstFragment.Callback {
         goToFirstFragmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Investigator.log(this);
                 onLoadFirstFragmentButtonClick();
             }
         });
+
+        anonymousAndInnerClassExamples();
 
         updateView();
 
@@ -67,6 +71,40 @@ public class MainActivity extends Activity implements FirstFragment.Callback {
 
         threadExample();
     }
+
+    private void anonymousAndInnerClassExamples() {
+        new Runnable() {
+            @Override
+            public void run() {
+                Log.d("toString", toString());
+                Log.d("getClass", getClass().getName());
+                Investigator.log(this, "Anonymous class");
+            }
+        }.run();
+
+        new MyRunnable().run();
+        new MyStaticRunnable().run();
+    }
+
+    private class MyRunnable implements Runnable {
+        @Override
+        public void run() {
+            Log.d("toString", toString());
+            Log.d("getClass", getClass().getSimpleName());
+            Investigator.log(this, "Inner class (non-static)");
+        }
+    }
+
+    private static class MyStaticRunnable implements Runnable {
+        @Override
+        public void run() {
+            Log.d("toString", toString());
+            Log.d("getClass", getClass().getSimpleName());
+            Investigator.log(this, "Static inner class");
+        }
+    }
+
+
 
     private void updateView() {
         Investigator.log(this);

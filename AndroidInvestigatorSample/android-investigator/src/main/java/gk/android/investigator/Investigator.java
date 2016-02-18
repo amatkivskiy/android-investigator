@@ -1,15 +1,16 @@
 package gk.android.investigator;
 
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 /**
  * Simplifies adding ad hoc tracking logs to code during investigation.<p>
- * <p/>
+ * <p>
  * For tracking down asynchronous events, lifecycles simply adding <code>Investigator.log(this)</code> to every checkpoint will usually do.
  * (Set {@link Investigator#methodDepth} to 1 to see who is calling the watched method.)<p>
- * <p/>
+ * <p>
  * The varargs param can be used to print variable values.<p>
- * <p/>
+ * <p>
  * Printing elapsed time is also possible, see more at the methods.<p>
  *
  * @author Gabor_Keszthelyi
@@ -38,11 +39,11 @@ public class Investigator {
      */
     public static boolean removePackageName = true;
     /**
-     * When enabled, an extra word ({@link #innerClassHighlightWord}) is inserted into anonymous and nested inner class toString values to help notice them more easily.
+     * When enabled, an extra word ({@link #anonymousClassHighlightWord}) is inserted into anonymous and nested inner class toString values to help notice them more easily.
      * <p>e.g.: <code>FirstFragment$1@1bf1abe3.onClick()</code> --&gt; <code>FirstFragment_INNNER_1@1bf1abe3.onClick()</code>
      */
-    public static boolean highlightInnerClasses = true;
-    public static String innerClassHighlightWord = "_INNER_";
+    public static boolean highlightAnonymousClasses = true;
+    public static String anonymousClassHighlightWord = "_ANONYMOUS_";
 
     public static String patternThreadName = "[%s] ";
     public static String patternInstanceAndMethod = "%s.%s()";
@@ -170,7 +171,7 @@ public class Investigator {
         if (removePackageName) {
             instanceName = removePackageName(instanceName);
         }
-        instanceName = checkAndHighlightInnerClass(instanceName);
+        instanceName = checkAndHighlightAnonymousClass(instanceName);
         return String.format(patternInstanceAndMethod, instanceName, methodName);
     }
 
@@ -178,16 +179,17 @@ public class Investigator {
         return instanceName.substring(instanceName.lastIndexOf(".") + 1);
     }
 
-    // TODO Unit test
-    private static String checkAndHighlightInnerClass(String instanceName) {
-        if (!highlightInnerClasses) {
+    @VisibleForTesting
+    static String checkAndHighlightAnonymousClass(String instanceName) {
+        if (!highlightAnonymousClasses) {
             return instanceName;
         }
-        int symbolLocation = instanceName.indexOf(INNER_CLASS_TOSTRING_SYMBOL);
-        if (symbolLocation < 0) {
-            return instanceName;
+        int symbolIndex = instanceName.indexOf(INNER_CLASS_TOSTRING_SYMBOL);
+        boolean hasSymbolPlusDigit = symbolIndex > 0 && instanceName.length() > symbolIndex + 2 && Character.isDigit(instanceName.charAt(symbolIndex + 1));
+        if (hasSymbolPlusDigit) {
+            return new StringBuilder(instanceName).deleteCharAt(symbolIndex).insert(symbolIndex, anonymousClassHighlightWord).toString();
         } else {
-            return new StringBuilder(instanceName).deleteCharAt(symbolLocation).insert(symbolLocation, innerClassHighlightWord).toString();
+            return instanceName;
         }
     }
 
@@ -197,7 +199,7 @@ public class Investigator {
 
     private static String insertInnerClassHighlight(String instanceName) {
         int insertionLocation = instanceName.indexOf(INNER_CLASS_TOSTRING_SYMBOL);
-        return instanceName.substring(0, insertionLocation) + innerClassHighlightWord + instanceName.substring(insertionLocation + 1);
+        return instanceName.substring(0, insertionLocation) + anonymousClassHighlightWord + instanceName.substring(insertionLocation + 1);
     }
 
     private static String commentMessage(String comment) {
@@ -235,7 +237,7 @@ public class Investigator {
 
     private static String stackTraceLine(StackTraceElement stackTraceElement) {
         String className = stackTraceElement.getClassName();
-        className = checkAndHighlightInnerClass(className);
+        className = checkAndHighlightAnonymousClass(className);
         return String.format(patternExtraStacktraceLine, className, stackTraceElement.getMethodName());
     }
 

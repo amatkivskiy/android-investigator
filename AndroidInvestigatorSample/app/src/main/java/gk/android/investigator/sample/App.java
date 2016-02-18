@@ -12,7 +12,7 @@ import gk.android.investigator.Investigator;
 public class App extends Application {
 
     static {
-        Investigator.highlightInnerClasses = true;
+        Investigator.highlightAnonymousClasses = true;
         Investigator.methodDepth = 0;
         Investigator.tag = "Investigator";
         // ...
