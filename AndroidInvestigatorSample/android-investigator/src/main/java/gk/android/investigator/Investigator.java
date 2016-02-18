@@ -185,21 +185,12 @@ public class Investigator {
             return instanceName;
         }
         int symbolIndex = instanceName.indexOf(INNER_CLASS_TOSTRING_SYMBOL);
-        boolean hasSymbolPlusDigit = symbolIndex > 0 && instanceName.length() > symbolIndex + 2 && Character.isDigit(instanceName.charAt(symbolIndex + 1));
+        boolean hasSymbolPlusDigit = symbolIndex > 0 && instanceName.length() > symbolIndex + 1 && Character.isDigit(instanceName.charAt(symbolIndex + 1));
         if (hasSymbolPlusDigit) {
             return new StringBuilder(instanceName).deleteCharAt(symbolIndex).insert(symbolIndex, anonymousClassHighlightWord).toString();
         } else {
             return instanceName;
         }
-    }
-
-    private static boolean isInnerClass(String instanceName) {
-        return instanceName.contains(INNER_CLASS_TOSTRING_SYMBOL);
-    }
-
-    private static String insertInnerClassHighlight(String instanceName) {
-        int insertionLocation = instanceName.indexOf(INNER_CLASS_TOSTRING_SYMBOL);
-        return instanceName.substring(0, insertionLocation) + anonymousClassHighlightWord + instanceName.substring(insertionLocation + 1);
     }
 
     private static String commentMessage(String comment) {

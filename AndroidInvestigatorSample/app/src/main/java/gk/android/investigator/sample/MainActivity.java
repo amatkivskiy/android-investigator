@@ -1,9 +1,15 @@
 package gk.android.investigator.sample;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import gk.android.investigator.Investigator;
 
@@ -12,173 +18,144 @@ import gk.android.investigator.Investigator;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private String fruit = "cherry";
-    private String nullVar = null;
+    static {
+        // Changing defaults can be done anywhere.
+        Investigator.methodDepth = 0;
+        Investigator.tag = "Investigator";
+        Investigator.logLevel = Log.DEBUG;
+        Investigator.removePackageName = true;
+        Investigator.highlightAnonymousClasses = true;
+    }
+
+    private ViewGroup holder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        holder = (ViewGroup) findViewById(R.id.holder);
 
-        anonymousAndInnerClassExamples();
+        addButton("Simple usage", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                simpleUsage();
+            }
+        });
 
-        updateView();
+        addButton("With variable", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logVariable();
+            }
+        });
 
-        // Basic usage
-        Investigator.log(this);
+        addButton("With comment", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logWithComment();
+            }
+        });
 
-        // With a comment
-        Investigator.log(this, "comment");
+        addButton("Different instances", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                differentInstances();
+            }
+        });
 
-        // With variables
-        Investigator.log(this, "fruit", fruit);
-        Investigator.log(this, "nullVar", nullVar);
-        Investigator.log(this, "fruit", fruit, "nullVar", nullVar);
+        addButton("Different threads", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                differentThreads();
+            }
+        });
 
-        Investigator.startStopWatch(this);
+        addButton("Stack trace - 1 method depth", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stackTrace(1);
+            }
+        });
 
-        // Basic usage
-        Investigator.log(this);
+        addButton("Stack trace - 20 method depth", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stackTrace(20);
+            }
+        });
 
-        // With a comment
-        Investigator.log(this, "comment");
+        addButton("Anonymous class", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                anonymousClass();
+            }
+        });
 
-        // With variables
-        Investigator.log(this, "fruit", fruit);
-        Investigator.log(this, "nullVar", nullVar);
-        Investigator.log(this, "fruit", fruit, "nullVar", nullVar);
-
-        Investigator.stopLoggingTimes();
-
-
-        threadExample();
+        addButton("Stopwatch", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopWatch();
+            }
+        });
     }
 
-    private void anonymousAndInnerClassExamples() {
+    private void addButton(String text, View.OnClickListener onClickListener) {
+        Button button = new Button(this);
+        button.setText(text);
+        button.setOnClickListener(onClickListener);
+        holder.addView(button);
+    }
+
+    private void simpleUsage() {
+        Investigator.log(this);
+    }
+
+    private void logVariable() {
+        String name = "John";
+        BigDecimal pi = new BigDecimal("3.14");
+        List<String> days = Arrays.asList("Mon", "Tue", "Wed");
+
+        Investigator.log(this, "name", name);
+        Investigator.log(this, "name", name, "pi", pi, "days", days);
+    }
+
+    private void logWithComment() {
+        Investigator.log(this, "this is a comment");
+    }
+
+    private void differentInstances() {
+        MyRunnable.create().run();
+        MyRunnable.create().run();
+    }
+
+    private void differentThreads() {
+        MyRunnable runnable = MyRunnable.create();
+        runnable.run();
+        new Thread(runnable, "ThreadName-1").start();
+        new Thread(runnable, "ThreadName-2").start();
+        MyAsyncTask.create().execute();
+    }
+
+    private void stackTrace(int methodDepth) {
+        int originalMethodDepth = Investigator.methodDepth;
+        Investigator.methodDepth = methodDepth;
+        Investigator.log(this);
+        Investigator.methodDepth = originalMethodDepth;
+    }
+
+    private void anonymousClass() {
         new Runnable() {
             @Override
             public void run() {
-                Log.d("toString", toString());
-                Log.d("getClass", getClass().getName());
-                Investigator.log(this, "Anonymous class");
+                Investigator.log(this);
             }
         }.run();
-
-        new MyRunnable().run();
-        new MyStaticRunnable().run();
     }
 
-    private class MyRunnable implements Runnable {
-        @Override
-        public void run() {
-            Log.d("toString", toString());
-            Log.d("getClass", getClass().getSimpleName());
-            Investigator.log(this, "Inner class (non-static)");
-        }
+    private void stopWatch() {
+        Investigator.startStopWatch(this);
+        new Thread(LongerRunningTask.create()).start();
     }
 
-    private static class MyStaticRunnable implements Runnable {
-        @Override
-        public void run() {
-            Log.d("toString", toString());
-            Log.d("getClass", getClass().getSimpleName());
-            Investigator.log(this, "Static inner class");
-        }
-    }
-
-
-    private void updateView() {
-        Investigator.log(this);
-    }
-
-    private void threadExample() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Investigator.log(this);
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                storeUsername();
-            }
-        }, "some-background-thread").start();
-
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                Investigator.log(this);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                Investigator.log(this);
-            }
-        }.execute();
-
-        new MyAsyncTask().execute();
-        new MyStaticAsyncTask().execute();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Investigator.log(this);
-        storeUsername();
-        firstLevelMethod();
-    }
-
-    private void storeUsername() {
-        new UserStore().storeUser("Jack");
-    }
-
-    private void firstLevelMethod() {
-        secondLevelMethod();
-    }
-
-    private void secondLevelMethod() {
-        thirdLevelMethod();
-    }
-
-    private void thirdLevelMethod() {
-        fourthLevelMethod();
-    }
-
-    private void fourthLevelMethod() {
-        int noOfExtraMethodDepthLogged = Investigator.methodDepth;
-        Investigator.methodDepth = 10;
-        Investigator.log(this);
-        Investigator.methodDepth = noOfExtraMethodDepthLogged;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Investigator.log(this);
-    }
-
-    class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            Investigator.log(this);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            Investigator.log(this);
-        }
-    }
-
-    static class MyStaticAsyncTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            Investigator.log(this);
-            return null;
-        }
-    }
 }

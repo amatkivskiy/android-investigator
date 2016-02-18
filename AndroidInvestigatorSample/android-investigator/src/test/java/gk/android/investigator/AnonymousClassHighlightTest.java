@@ -35,8 +35,10 @@ public class AnonymousClassHighlightTest {
 
     @Test
     public void testCheckAndHighlightAnonymousClass_anonymousClass_shouldInsertHighlightWord() {
+        assertEquals("MainActivity" + anonymousClassHighlightWord + "2", checkAndHighlightAnonymousClass("MainActivity$2"));
         assertEquals("MainActivity" + anonymousClassHighlightWord + "2@a898d8f", checkAndHighlightAnonymousClass("MainActivity$2@a898d8f"));
         assertEquals("MainActivity" + anonymousClassHighlightWord + "2234@a898d8f", checkAndHighlightAnonymousClass("MainActivity$2234@a898d8f"));
+        assertEquals("gk.android.investigator.sample.MainActivity" + anonymousClassHighlightWord + "8", checkAndHighlightAnonymousClass("gk.android.investigator.sample.MainActivity$8"));
     }
 
     @Test
