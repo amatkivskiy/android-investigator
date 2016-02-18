@@ -5,12 +5,12 @@ import android.util.Log;
 
 /**
  * Simplifies adding ad hoc tracking logs to code during investigation.<p>
- * <p>
+ * <p/>
  * For tracking down asynchronous events, lifecycles simply adding <code>Investigator.log(this)</code> to every checkpoint will usually do.
  * (Set {@link Investigator#methodDepth} to 1 to see who is calling the watched method.)<p>
- * <p>
+ * <p/>
  * The varargs param can be used to print variable values.<p>
- * <p>
+ * <p/>
  * Printing elapsed time is also possible, see more at the methods.<p>
  *
  * @author Gabor_Keszthelyi
@@ -51,7 +51,7 @@ public class Investigator {
     public static String patternVariableNameAndValue = " | %s = %s";
     public static String messageStopwatchStarted = " | 0 ms (STOPWATCH STARTED)";
     public static String patternElapsedTime = " | %s ms";
-    public static String patternExtraStacktraceLine = "..." + patternInstanceAndMethod;
+    public static String patternStacktraceLine = "\tat %s";
     public static String newLine = "\n";
 
     private static final int STACKTRACE_INDEX_OF_CALLING_METHOD = 3; // fixed value, need to update only if the 'location' of the stack trace fetching code changes
@@ -233,9 +233,7 @@ public class Investigator {
     }
 
     private static String stackTraceLine(StackTraceElement stackTraceElement) {
-        String className = stackTraceElement.getClassName();
-        className = checkAndHighlightAnonymousClass(className);
-        return String.format(patternExtraStacktraceLine, className, stackTraceElement.getMethodName());
+        return String.format(patternStacktraceLine, stackTraceElement.toString());
     }
 
     private static void logText(StringBuilder message) {
