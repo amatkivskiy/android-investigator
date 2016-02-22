@@ -134,16 +134,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void differentInstances() {
-        MyRunnable.create().run();
-        MyRunnable.create().run();
+        new MyRunnable().run();
+        new MyRunnable().run();
     }
 
     private void differentThreads() {
-        MyRunnable runnable = MyRunnable.create();
+        MyRunnable runnable = new MyRunnable();
         runnable.run();
         new Thread(runnable, "ThreadName-1").start();
         new Thread(runnable, "ThreadName-2").start();
-        MyAsyncTask.create().execute();
+        new MyAsyncTask().execute();
     }
 
     private void stackTrace(int methodDepth) {
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void stopWatch() {
         Investigator.startStopWatch(this);
-        new Thread(LongerRunningTask.create()).start();
+        new Thread(new LongerRunningTask()).start();
     }
 
     private void overriddenToString() {

@@ -9,10 +9,6 @@ import gk.android.investigator.Investigator;
  */
 public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    public static MyAsyncTask create() {
-        return new MyAsyncTask();
-    }
-
     @Override
     protected Void doInBackground(Void... params) {
         Investigator.log(this);

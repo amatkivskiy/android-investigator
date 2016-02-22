@@ -18,7 +18,4 @@ public class LongerRunningTask implements Runnable {
         Investigator.stopLoggingTimes();
     }
 
-    public static LongerRunningTask create() {
-        return new LongerRunningTask();
-    }
 }

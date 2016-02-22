@@ -12,7 +12,4 @@ public class MyRunnable implements Runnable {
         Investigator.log(this);
     }
 
-    public static MyRunnable create() {
-        return new MyRunnable();
-    }
 }
