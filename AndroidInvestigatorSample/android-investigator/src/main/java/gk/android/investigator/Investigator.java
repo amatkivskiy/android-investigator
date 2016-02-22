@@ -1,6 +1,5 @@
 package gk.android.investigator;
 
-import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 /**
@@ -175,7 +174,7 @@ public class Investigator {
         return String.format(patternInstanceAndMethod, instanceName, methodName);
     }
 
-    @VisibleForTesting
+    // VisibleForTesting
     static String removePackageName(String instanceName) {
         int lastDotIndex = instanceName.lastIndexOf(".");
         if (lastDotIndex < 0 || lastDotIndex == instanceName.length() - 1) {
@@ -185,7 +184,7 @@ public class Investigator {
         }
     }
 
-    @VisibleForTesting
+    // VisibleForTesting
     static String checkAndHighlightAnonymousClass(String instanceName) {
         if (!highlightAnonymousClasses) {
             return instanceName;
