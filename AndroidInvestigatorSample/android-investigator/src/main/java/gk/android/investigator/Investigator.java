@@ -5,12 +5,12 @@ import android.util.Log;
 
 /**
  * Simplifies adding ad hoc tracking logs to code during investigation.<p>
- * <p/>
+ * <p></p>
  * For tracking down asynchronous events, lifecycles simply adding <code>Investigator.log(this)</code> to every checkpoint will usually do.
  * (Set {@link Investigator#methodDepth} to 1 to see who is calling the watched method.)<p>
- * <p/>
+ * <p></p>
  * The varargs param can be used to print variable values.<p>
- * <p/>
+ * <p></p>
  * Printing elapsed time is also possible, see more at the methods.<p>
  *
  * @author Gabor_Keszthelyi
@@ -61,7 +61,7 @@ public class Investigator {
 
     /**
      * Logs the calling instance and method name.
-     * <p><b>Example</b>
+     * <p></p><b>Example</b>
      * <br>Code:
      * <br><code>Investigator.log(this);</code>
      * <br>Log:
@@ -75,7 +75,7 @@ public class Investigator {
 
     /**
      * Logs the calling instance and method name, and the comment.
-     * <p><b>Example</b>
+     * <p></p><b>Example</b>
      * <br>Code:
      * <br><code>Investigator.log(this, "some comment");</code>
      * <br>Log:
@@ -90,7 +90,7 @@ public class Investigator {
 
     /**
      * Logs the calling instance and method name, and the variable names and values.
-     * <p><b>Example</b>
+     * <p></p><b>Example</b>
      * <br>Code:
      * <br><code>Investigator.log(this, "fruit", fruit);</code>
      * <br><code>Investigator.log(this, "fruit", fruit, "color", color);</code>
@@ -107,7 +107,7 @@ public class Investigator {
 
     /**
      * Starts an internal stopwatch and the consequent log calls will print the time elapsed since this call. Calling it multiple times restarts the stopwatch.
-     * <p><b>Example</b>
+     * <p></p><b>Example</b>
      * <br>Code:
      * <br><code>Investigator.startStopWatch(this);</code>
      * <br><code>...</code>
