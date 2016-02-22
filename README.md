@@ -1,4 +1,4 @@
-__Android Investigator__ can be used to quickly add informative debug logs to the code without typing much:  
+__Android Investigator__ can be used to quickly add **informative debug logs** to the code without typing much:  
 ```
 @Override
 public void onResume() {
@@ -13,18 +13,18 @@ D/Investigator: [main] MainActivity@27a4868.onResume()
 
 It can log:
 
-* **thread name**
-* **object instance** (its `toString()` value)
-* **method name**
-* **stacktrace** (the method depth is configurable)
-* **variable value** conveniently
-* **time elapsed** since a start call
-* an extra **comment**
+* *thread name*
+* *object instance* (its `toString()` value)
+* *method name*
+* *stacktrace* (the method depth is configurable)
+* *variable value* conveniently
+* *time elapsed* since a start call
+* an extra *comment*
 
 ### What is it for? ###
 
-Android Investigator is not a logging solution for production code but a productivity tool to help investigate something.  
-It can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity. (But once it's available on the classpath, I also found myself using it for quickly checking object instance or thread in simple situations too.)  
+Android Investigator is not a logging solution for production code but a productivity tool to help investigate something. 
+It can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity. (But once it's available on the classpath, I also found myself using it for quickly checking object instances or threads in simple situations too.)  
 Adding a few simple Investigator log calls to checkpoints **can provide information about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**.
 
 ### More sample usage ###
