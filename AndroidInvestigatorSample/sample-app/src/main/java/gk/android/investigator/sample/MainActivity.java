@@ -1,5 +1,6 @@
 package gk.android.investigator.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -107,6 +108,13 @@ public class MainActivity extends AppCompatActivity {
                 overriddenToString();
             }
         });
+
+        addButton("__Go to sample log screen__", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSampleLogScreen();
+            }
+        });
     }
 
     private void addButton(String text, View.OnClickListener onClickListener) {
@@ -170,6 +178,10 @@ public class MainActivity extends AppCompatActivity {
     private void overriddenToString() {
         ClassWithToString john = new ClassWithToString("John", 55);
         john.doSomething();
+    }
+
+    private void goToSampleLogScreen() {
+        startActivity(new Intent(this, SampleLogActivity.class));
     }
 
 }

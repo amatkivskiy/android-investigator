@@ -1,7 +1,4 @@
 <resources>
     <string name="app_name">Android Investigator Sample</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="settingsActivity_label">Settings</string>
+    <string name="sampleLogActivity_label">Sample log screen</string>
 </resources>
