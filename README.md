@@ -47,7 +47,7 @@ D/Investigator: [AsyncTask 2] MyAsyncTask@ad03c5e.doInBackground()										<- I
 D/Investigator: [main] SampleLogActivity@a21b74.onPause() | 0 ms (STOPWATCH STARTED)					<- Investigator.startStopWatch(this);
 D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- Investigator.log(this);
 ```
-*Tag*, stacktrace *method depth*, *thread* on/off, *log level*, and *formatting* is customizable through the fields of the class.
+*Tag*, stacktrace *method depth*, *thread* on/off, and *log level* are customizable through the fields of the class.
 (check out [the class][TheClass] itself or the [javadoc][JavaDoc])
 
 What it is useful for?
