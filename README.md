@@ -19,12 +19,12 @@ D/Investigator: [main] MainActivity@27a4868.onResume()
 It can log
 ----------
 
-* **thread name**
-* **object instance** (its `toString()` value)
-* **method name**
-* **stacktrace** (the method depth is configurable)
-* **variable value** conveniently
-* **time elapsed** since a start call
+* the **thread name**
+* the **object instance** (its `toString()` value)
+* the **method name**
+* the **stacktrace** at the place of the call (the method depth is configurable)
+* **variable values** conveniently
+* the **time elapsed** since a start call
 * an extra **comment**
 
 What it is useful for?
