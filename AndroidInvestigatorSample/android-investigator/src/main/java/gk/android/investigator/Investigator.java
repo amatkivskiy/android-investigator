@@ -3,14 +3,10 @@ package gk.android.investigator;
 import android.util.Log;
 
 /**
- * Simplifies adding ad hoc tracking logs to code during investigation.<p>
- * <p></p>
- * For tracking down asynchronous events, lifecycles simply adding <code>Investigator.log(this)</code> to every checkpoint will usually do.
- * (Set {@link Investigator#methodDepth} to 1 to see who is calling the watched method.)<p>
- * <p></p>
- * The varargs param can be used to print variable values.<p>
- * <p></p>
- * Printing elapsed time is also possible, see more at the methods.<p>
+ * Simple logging tool for adding informative debug logs to code easily.
+ * <br><br>
+ * Usage:<br>
+ * Add <code>Investigator.log(this)</code> to 'checkpoints'. (Setting {@link Investigator#methodDepth} different from zero will print who is calling the watched method.)
  *
  * @author Gabor_Keszthelyi
  */
@@ -21,37 +17,37 @@ public class Investigator {
      */
     public static String tag = "Investigator";
     /**
-     * Number of the extra stacktrace elements (class + method name) logged from the stacktrace created at the log() call. Zero means no extra method is logged, only the watched one.<p>
-     * (It is exposed so it can be changed at individual checkpoints if needed.)
+     * Number of the extra stacktrace elements (class + method name) logged from the stacktrace created at the log() call.
+     * Zero means no extra method is logged, only the watched one.<p>
      */
     public static int methodDepth = 0;
     /**
-     * If true, the name of the thread is printed at the beginning of the log message.
+     * Log the thread name or not.
      */
     public static boolean threadNameEnabled = true;
     /**
-     * The log level used for logcat.
+     * Log level used for logcat.
      */
     public static int logLevel = Log.DEBUG;
     /**
-     * If true, the package name from the instance's toString value is removed for easier readability of the logs.
+     * Remove the package name from the instance's toString value for easier readability.
      */
     public static boolean removePackageName = true;
     /**
-     * When enabled, an extra word ({@link #anonymousClassHighlightWord}) is inserted into anonymous and nested inner class toString values to help notice them more easily.
+     * When enabled, an extra word ({@link #anonymousClassHighlightWord}) is inserted into anonymous classes' toString values to help notice them more easily.
      * <p>e.g.: <code>FirstFragment$1@1bf1abe3.onClick()</code> --&gt; <code>FirstFragment_INNNER_1@1bf1abe3.onClick()</code>
      */
     public static boolean highlightAnonymousClasses = true;
     public static String anonymousClassHighlightWord = "_ANONYMOUS_";
 
-    public static String patternThreadName = "[%s] ";
-    public static String patternInstanceAndMethod = "%s.%s()";
-    public static String patternComment = " | %s";
-    public static String patternVariableNameAndValue = " | %s = %s";
-    public static String messageStopwatchStarted = " | 0 ms (STOPWATCH STARTED)";
-    public static String patternElapsedTime = " | %s ms";
-    public static String patternStacktraceLine = "\tat %s";
-    public static String newLine = "\n";
+    private static String patternThreadName = "[%s] ";
+    private static String patternInstanceAndMethod = "%s.%s()";
+    private static String patternComment = " | %s";
+    private static String patternVariableNameAndValue = " | %s = %s";
+    private static String messageStopwatchStarted = " | 0 ms (STOPWATCH STARTED)";
+    private static String patternElapsedTime = " | %s ms";
+    private static String patternStacktraceLine = "\tat %s";
+    private static String newLine = "\n";
 
     private static final int STACKTRACE_INDEX_OF_CALLING_METHOD = 3; // fixed value, need to update only if the 'location' of the stack trace fetching code changes
     private static final String ANONYMOUS_CLASS_TOSTRING_SYMBOL = "$";
@@ -59,12 +55,12 @@ public class Investigator {
     private static boolean isStopWatchGoing;
 
     /**
-     * Logs the calling instance and method name.
-     * <p></p><b>Example</b>
+     * Logs the calling instance and method name.<p>
+     * <b>Example</b>
      * <br>Code:
      * <br><code>Investigator.log(this);</code>
      * <br>Log:
-     * <br><code>D/investigation﹕ MainActivity@788dc5c.onCreate()</code>
+     * <br><code>D/Investigator: MainActivity@788dc5c.onCreate()</code>
      *
      * @param instance the calling object instance
      */
@@ -73,12 +69,12 @@ public class Investigator {
     }
 
     /**
-     * Logs the calling instance and method name, and the comment.
-     * <p></p><b>Example</b>
+     * Logs the calling instance and method name, and the comment.<p>
+     * <b>Example</b>
      * <br>Code:
      * <br><code>Investigator.log(this, "some comment");</code>
      * <br>Log:
-     * <br><code>D/investigation﹕ MainActivity@788dc5c.onCreate() | some comment</code>
+     * <br><code>D/Investigator: MainActivity@788dc5c.onCreate() | some comment</code>
      *
      * @param instance the calling object instance
      * @param comment  extra comment message
@@ -88,14 +84,14 @@ public class Investigator {
     }
 
     /**
-     * Logs the calling instance and method name, and the variable names and values.
-     * <p></p><b>Example</b>
+     * Logs the calling instance and method name, and the variable names and values.<p>
+     * <b>Example</b>
      * <br>Code:
      * <br><code>Investigator.log(this, "fruit", fruit);</code>
      * <br><code>Investigator.log(this, "fruit", fruit, "color", color);</code>
      * <br>Log:
-     * <br><code>D/investigation﹕ MainActivity@788dc5c.onCreate() | fruit = cherry</code>
-     * <br><code>D/investigation﹕ MainActivity@788dc5c.onCreate() | fruit = cherry | color = red</code>
+     * <br><code>D/Investigator: MainActivity@788dc5c.onCreate() | fruit = cherry</code>
+     * <br><code>D/Investigator: MainActivity@788dc5c.onCreate() | fruit = cherry | color = red</code>
      *
      * @param instance               the calling object instance
      * @param variableNamesAndValues variable name and value pairs
@@ -105,15 +101,16 @@ public class Investigator {
     }
 
     /**
-     * Starts an internal stopwatch and the consequent log calls will print the time elapsed since this call. Calling it multiple times restarts the stopwatch.
-     * <p></p><b>Example</b>
+     * Starts an internal stopwatch and the consequent log calls will print the time elapsed since this call.
+     * Calling it multiple times restarts the stopwatch.<p>
+     * <b>Example</b>
      * <br>Code:
      * <br><code>Investigator.startStopWatch(this);</code>
      * <br><code>...</code>
      * <br><code>Investigator.log(this);</code>
      * <br>Log:
-     * <br><code>D/investigation﹕ MainActivity@788dc5c.onCreate() | 0 ms (STOPWATCH STARTED)</code>
-     * <br><code>D/investigation﹕ NetworkController@788dc5c.onJobFinished() | 126 ms</code>
+     * <br><code>D/Investigator: MainActivity@788dc5c.onCreate() | 0 ms (STOPWATCH STARTED)</code>
+     * <br><code>D/Investigator: NetworkController@788dc5c.onJobFinished() | 126 ms</code>
      *
      * @param instance the calling object instance
      */
