@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 group = 'com.github.lemonboston'
-version = '0.1.0'
+version = '0.1.1'
 
 def snapshotRepo = 'https://oss.sonatype.org/content/repositories/snapshots'
 def stagingRepo = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
