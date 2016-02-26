@@ -12,7 +12,7 @@ public void onResume() {
 }
 ```
 log:
-```console
+```
 D/Investigator: [main] MainActivity@27a4868.onResume()
 ```
 
@@ -27,30 +27,35 @@ It can log
 * the **time elapsed** since a start call
 * an extra **comment**
 
+
+More sample usage
+--------------------
+```
+D/Investigator: [main] SampleLogActivity@a21b74.onCreate()												<- Investigator.log(this)
+
+D/Investigator: [main] SampleLogActivity@a21b74.onCreate() | some comment								<- Investigator.log(this, "some comment")
+
+D/Investigator: [main] SampleLogActivity@a21b74.onStart() | name = John									<- Investigator.log(this, "name", name)
+
+D/Investigator: [main] SampleLogActivity@a21b74.onStart() | pi = 3.14 | days = [Mon, Tue, Wed]			<- Investigator.log(this, "pi", pi, "days", days);
+
+D/Investigator: [AsyncTask 2] MyAsyncTask@ad03c5e.doInBackground()										<- Investigator.log(this); (Investigator.methodDepth = 3)
+                    at gk.android.investigator.sample.MyAsyncTask.doInBackground(MyAsyncTask.java:10)
+                    at android.os.AsyncTask$2.call(AsyncTask.java:295)
+                    at java.util.concurrent.FutureTask.run(FutureTask.java:237)                    
+
+D/Investigator: [main] SampleLogActivity@a21b74.onPause() | 0 ms (STOPWATCH STARTED)					<- Investigator.startStopWatch(this);
+D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- Investigator.log(this);
+```
+*Tag*, stacktrace *method depth*, *thread* on/off, *log level*, and *formatting* is customizable through the fields of the class.
+(check out [the class][TheClass] itself or the [javadoc][JavaDoc])
+
 What it is useful for?
 ----------------------
 Android Investigator can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity. (But once it's available on the classpath, I found myself using it for quickly checking object instances or threads in simple situations too.)  
 Adding a few simple Investigator log calls to checkpoints **can provide information about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**.  
 
 *Note:* Android Investigator is not intended as a logging solution for production code. It is for temporary ad hoc logging during investigating something. I usually just keep it on the debug classpath to not include it in the release build.
-
-More sample usage
---------------------
-```console
-D/Investigator: [main] SampleLogActivity@a21b74.onCreate()												<- Investigator.log(this)
-D/Investigator: [main] SampleLogActivity@a21b74.onCreate() | some comment								<- Investigator.log(this, "some comment")
-D/Investigator: [main] SampleLogActivity@a21b74.onStart() | name = John									<- Investigator.log(this, "name", name)
-D/Investigator: [main] SampleLogActivity@a21b74.onStart() | pi = 3.14 | days = [Mon, Tue, Wed]			<- Investigator.log(this, "pi", pi, "days", days);
-D/Investigator: [main] MyAsyncTask@ad03c5e.onPreExecute()
-D/Investigator: [AsyncTask 2] MyAsyncTask@ad03c5e.doInBackground()										<- Investigator.methodDepth = 3; Investigator.log(this); Investigator.methodDepth = 0;
-                    at gk.android.investigator.sample.MyAsyncTask.doInBackground(MyAsyncTask.java:10)
-                    at android.os.AsyncTask$2.call(AsyncTask.java:295)
-                    at java.util.concurrent.FutureTask.run(FutureTask.java:237)                    
-D/Investigator: [main] MyAsyncTask@ad03c5e.onPostExecute()
-D/Investigator: [main] SampleLogActivity@a21b74.onPause() | 0 ms (STOPWATCH STARTED)					<- Investigator.startStopWatch(this);
-D/Investigator: [main] MainActivity@b0ae1b2.onResume() | 17 ms											<- Investigator.log(this);
-D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- Investigator.log(this); Investigator.stopLoggingTimes();
-```
 
 Download
 ----------
@@ -59,6 +64,7 @@ dependencies {
     debugCompile 'com.github.lemonboston:android-investigator:0.1.0'
 }
 ```
+or, since it is a single class, you can also just grab the java file from [here][TheClass].
 
 License
 ----------
@@ -84,3 +90,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+[TheClass]: /AndroidInvestigatorSample/android-investigator/src/main/java/gk/android/investigator/Investigator.java
+[JavaDoc]: http://www.javadoc.io/doc/com.github.lemonboston/android-investigator/
