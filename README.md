@@ -1,7 +1,7 @@
 Android Investigator
 ====================
 
-A simple tool that can be used to quickly add **informative debug logs** to the code without typing much:  
+A simple tool that can be used to quickly add **informative debug logs** to the code during investigation without typing much:  
 
 
 ```java
@@ -50,12 +50,11 @@ D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- 
 *Tag*, stacktrace *method depth*, *thread* on/off, and *log level* are customizable through the fields of the class.
 (check out [the class][TheClass] itself or the [javadoc][JavaDoc])
 
-What it is useful for?
+When it is useful?
 ----------------------
-Android Investigator can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity. (But once it's available on the classpath, I found myself using it for quickly checking object instances or threads in simple situations too.)  
-Adding a few simple Investigator log calls to checkpoints **can provide information about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**.  
-
-*Note:* Android Investigator is not intended as a logging solution for production code. It is for temporary ad hoc logging during investigating something. I usually just keep it on the debug classpath to not include it in the release build.
+It can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity.
+Adding a few simple Investigator log calls to checkpoints can provide a **quick overview about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**.  
+(I also found myself using it instead of simple debugging, too.)  
 
 Download
 ----------
@@ -64,7 +63,6 @@ dependencies {
     debugCompile 'com.github.lemonboston:android-investigator:0.1.0'
 }
 ```
-or, since it is a single class, you can also just grab the java file from [here][TheClass].
 
 License
 ----------
