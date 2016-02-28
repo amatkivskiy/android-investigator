@@ -50,7 +50,7 @@ D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- 
 *Tag*, stacktrace *method depth*, *thread* on/off, and *log level* are customizable through the fields of the class.
 (check out [the class][TheClass] itself or the [javadoc][JavaDoc])
 
-When it is useful?
+When is it useful?
 ----------------------
 It can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity.
 Adding a few simple Investigator log calls to checkpoints can provide a **quick overview about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**.  
