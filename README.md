@@ -39,7 +39,7 @@ D/Investigator: [main] SampleLogActivity@a21b74.onStart() | name = John									
 
 D/Investigator: [main] SampleLogActivity@a21b74.onStart() | pi = 3.14 | days = [Mon, Tue, Wed]			<- Investigator.log(this, "pi", pi, "days", days);
 
-D/Investigator: [AsyncTask 2] MyAsyncTask@ad03c5e.doInBackground()										<- Investigator.log(this); (Investigator.methodDepth = 3)
+D/Investigator: [AsyncTask 2] MyAsyncTask@ad03c5e.doInBackground()										<- Investigator.log(this, 3);
                     at gk.android.investigator.sample.MyAsyncTask.doInBackground(MyAsyncTask.java:10)
                     at android.os.AsyncTask$2.call(AsyncTask.java:295)
                     at java.util.concurrent.FutureTask.run(FutureTask.java:237)                    
