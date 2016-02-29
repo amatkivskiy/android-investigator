@@ -6,7 +6,7 @@ import android.util.Log;
  * Simple logging tool for adding informative debug logs to code easily.
  * <br><br>
  * Usage:<br>
- * Add <code>Investigator.log(this)</code> to 'checkpoints'. (Setting {@link Investigator#methodDepth} different from zero will print who is calling the watched method.)
+ * Add <code>Investigator.log(this)</code> to 'checkpoints'. (Setting {@link Investigator#defaultMethodDepth} different from zero will print who is calling the watched method.)
  *
  * @author Gabor_Keszthelyi
  */
@@ -20,7 +20,7 @@ public class Investigator {
      * Number of the extra stacktrace elements (class + method name) logged from the stacktrace created at the log() call.
      * Zero means no extra method is logged, only the watched one.<p>
      */
-    public static int methodDepth = 0;
+    public static int defaultMethodDepth = 0;
     /**
      * Log the thread name or not.
      */
@@ -65,7 +65,7 @@ public class Investigator {
      * @param instance the calling object instance
      */
     public static void log(Object instance) {
-        doLog(instance, null, false, null);
+        doLog(instance, null, false, null, defaultMethodDepth);
     }
 
     /**
@@ -80,7 +80,7 @@ public class Investigator {
      * @param comment  extra comment message
      */
     public static void log(Object instance, String comment) {
-        doLog(instance, comment, false, null);
+        doLog(instance, comment, false, null, defaultMethodDepth);
     }
 
     /**
@@ -97,7 +97,25 @@ public class Investigator {
      * @param variableNamesAndValues variable name and value pairs
      */
     public static void log(Object instance, Object... variableNamesAndValues) {
-        doLog(instance, null, false, variableNamesAndValues);
+        doLog(instance, null, false, variableNamesAndValues, defaultMethodDepth);
+    }
+
+    /**
+     * Logs the calling instance and method name, and the stacktrace to the given method depth.<p>
+     * <b>Example</b>
+     * <br>Code:
+     * <br><code>Investigator.log(this, 3);</code>
+     * <br>Log:
+     * <br><code>D/Investigator: [main] MainActivity@cea8175.stackTrace()<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;at gk.android.investigator.sample.MainActivity.access$500(MainActivity.java:20)<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;at gk.android.investigator.sample.MainActivity$7.onClick(MainActivity.java:87)<br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;at android.view.View.performClick(View.java:5204)</code>
+     *
+     * @param instance    the calling object instance
+     * @param methodDepth the number of methods to log from the stacktrace
+     */
+    public static void log(Object instance, Integer methodDepth) {
+        doLog(instance, null, false, null, methodDepth);
     }
 
     /**
@@ -117,7 +135,7 @@ public class Investigator {
     public static void startStopWatch(Object instance) {
         StopWatch.startStopWatch();
         isStopWatchGoing = true;
-        doLog(instance, null, true, null);
+        doLog(instance, null, true, null, defaultMethodDepth);
     }
 
     /**
@@ -127,7 +145,7 @@ public class Investigator {
         isStopWatchGoing = false;
     }
 
-    private static void doLog(Object instance, String comment, boolean hasStopWatchJustStarted, Object[] variableNamesAndValues) {
+    private static void doLog(Object instance, String comment, boolean hasStopWatchJustStarted, Object[] variableNamesAndValues, Integer methodDepth) {
         StackTraceElement[] stackTrace = getStackTrace();
         StringBuilder msg = new StringBuilder();
         if (threadNameEnabled) {
@@ -147,7 +165,7 @@ public class Investigator {
             msg.append(timeElapsedMessage());
         }
         if (methodDepth > 0) {
-            msg.append(extraStackTraceLines(stackTrace));
+            msg.append(extraStackTraceLines(stackTrace, methodDepth));
         }
         logText(msg);
     }
@@ -218,7 +236,7 @@ public class Investigator {
         return String.format(patternElapsedTime, StopWatch.getElapsedTimeInMillis());
     }
 
-    private static StringBuilder extraStackTraceLines(StackTraceElement[] stackTrace) {
+    private static StringBuilder extraStackTraceLines(StackTraceElement[] stackTrace, Integer methodDepth) {
         StringBuilder extraLines = new StringBuilder();
         for (int i = STACKTRACE_INDEX_OF_CALLING_METHOD + 1;
              i <= STACKTRACE_INDEX_OF_CALLING_METHOD + methodDepth && i < stackTrace.length;

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     static {
         // Changing defaults can be done from anywhere.
         Investigator.threadNameEnabled = true;
-        Investigator.methodDepth = 0;
+        Investigator.defaultMethodDepth = 0;
         Investigator.tag = "Investigator";
         Investigator.logLevel = Log.DEBUG;
         Investigator.removePackageName = true;
@@ -155,10 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void stackTrace(int methodDepth) {
-        int originalMethodDepth = Investigator.methodDepth;
-        Investigator.methodDepth = methodDepth;
-        Investigator.log(this);
-        Investigator.methodDepth = originalMethodDepth;
+        Investigator.log(this, methodDepth);
     }
 
     private void anonymousClass() {
