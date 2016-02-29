@@ -54,8 +54,7 @@ D/Investigator: [AsyncTask 2] MyAsyncTask@ad03c5e.doInBackground()										<- I
 D/Investigator: [main] SampleLogActivity@a21b74.onPause() | 0 ms (STOPWATCH STARTED)					<- Investigator.startStopWatch(this);
 D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- Investigator.log(this);
 ```
-Tag, stacktrace method depth, thread name, and log level are customizable through the fields of the class.
-(Check out [the class][TheClass] itself or the [javadoc][JavaDoc].)
+Tag, default stacktrace method depth, thread name, and log level are customizable through the fields of the class. (Check out [the class][TheClass] itself or the [javadoc][JavaDoc].)
 
 When is it useful?
 ----------------------
