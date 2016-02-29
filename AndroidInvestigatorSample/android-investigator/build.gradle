@@ -12,6 +12,10 @@ def stagingRepo = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
+tasks.javadoc.options {
+    links 'http://docs.oracle.com/javase/6/docs/api/'
+}
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from tasks.javadoc.destinationDir

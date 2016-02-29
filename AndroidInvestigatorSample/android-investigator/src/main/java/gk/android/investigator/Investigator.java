@@ -5,8 +5,7 @@ import android.util.Log;
 /**
  * Simple logging tool for adding informative debug logs to code easily.
  * <br><br>
- * Usage:<br>
- * Add <code>Investigator.log(this)</code> to 'checkpoints'. (Setting {@link Investigator#defaultMethodDepth} different from zero will print who is calling the watched method.)
+ * Usage: Add <code>Investigator.log(this)</code> (or its variants) to checkpoints.
  *
  * @author Gabor_Keszthelyi
  */
