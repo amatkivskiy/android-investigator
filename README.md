@@ -48,7 +48,7 @@ D/Investigator: [main] SampleLogActivity@a21b74.onPause() | 0 ms (STOPWATCH STAR
 D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- Investigator.log(this);
 ```
 *Tag*, stacktrace *method depth*, *thread* on/off, and *log level* are customizable through the fields of the class.
-(check out [the class][TheClass] itself or the [javadoc][JavaDoc])
+(Check out [the class][TheClass] itself or the [javadoc][JavaDoc].)
 
 When is it useful?
 ----------------------
