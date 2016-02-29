@@ -8,7 +8,7 @@ A simple tool that can be used to quickly add **informative debug logs** to the 
 @Override
 public void onResume() {
     Investigator.log(this);
-    ...
+    // code
 }
 ```
 log:
@@ -23,14 +23,14 @@ Easy or automatic logging of the followings at the place of the call:
 * the **thread name**
 * the **!! object instance !!** (its `toString()` value)
 * the **method name**
-* the **stacktrace** (method depth is configurable)
+* the **stacktrace** (the method depth is configurable)
 * **variable values** conveniently
 * the **time elapsed** since a start call
 * an extra **comment**  
 
 Motivation
 ----------
-Android Investigator is not intended as a production logging solution but as a handy little productivity tool for bugfixing and investigation, kept available on the debug classpath (or even commented out in gradle).  
+Android Investigator is not intended as a production logging solution but as a handy little productivity tool for helping bugfixing and investigation, kept available on the debug classpath (or even commented out in gradle).  
 **Logging the object instance** (not just the class) **is the extra** that it does compared to other logging libraries. I found it useful in many situations (e.g.: configuration changes, fragment transactions, checking DI scopes, checking activity launchmodes).  
 It is also **simple and convenient to use**: 
 
@@ -64,11 +64,16 @@ Adding a few simple Investigator log calls to checkpoints can provide a **overvi
 
 Download
 ----------
+Android Investigator is available in [Maven Central][MavenSearch].  
+
+Get with gradle:
 ```
 dependencies {
-    debugCompile 'com.github.lemonboston:android-investigator:0.1.0'
+    debugCompile 'com.github.lemonboston:android-investigator:0.1.1'
 }
 ```
+Or, since it is a single java class, you can grab it from [here][TheClass] and add to your project.  
+
 
 License
 ----------
@@ -97,3 +102,4 @@ SOFTWARE.
 
 [TheClass]: /AndroidInvestigatorSample/android-investigator/src/main/java/gk/android/investigator/Investigator.java
 [JavaDoc]: http://www.javadoc.io/doc/com.github.lemonboston/android-investigator/
+[MavenSearch]: http://search.maven.org/#search%7Cga%7C1%7Clemonboston%20android-investigator
