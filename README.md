@@ -16,21 +16,22 @@ log:
 D/Investigator: [main] MainActivity@27a4868.onResume()
 ```
 
-It can log
+Features
 ----------
+Easy or automatic logging of the followings at the place of the call:
 
 * the **thread name**
 * the **!! object instance !!** (its `toString()` value)
 * the **method name**
-* the **stacktrace** at the place of the call (the method depth is configurable)
+* the **stacktrace** (method depth is configurable)
 * **variable values** conveniently
 * the **time elapsed** since a start call
 * an extra **comment**  
 
 Motivation
 ----------
-Android Investigator is not intended as a production logging solution but as a handy little tool for bugfixing and investigation, kept available on the debug classpath (or even commented out in gradle).  
-**Logging the object instance** (not just the class) **is the extra** that it does compared to other logging libraries. I found it useful in many situations (configuration changes, fragment transactions, checking DI scopes, etc).  
+Android Investigator is not intended as a production logging solution but as a handy little productivity tool for bugfixing and investigation, kept available on the debug classpath (or even commented out in gradle).  
+**Logging the object instance** (not just the class) **is the extra** that it does compared to other logging libraries. I found it useful in many situations (e.g.: configuration changes, fragment transactions, checking DI scopes, checking activity launchmodes).  
 It is also **simple and convenient to use**: 
 
 
@@ -59,7 +60,7 @@ Tag, stacktrace method depth, thread name, and log level are customizable throug
 When is it useful?
 ----------------------
 It can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity.
-Adding a few simple Investigator log calls to checkpoints can provide a **quick overview about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**. (I also found myself using it instead of simple debugging, too.)  
+Adding a few simple Investigator log calls to checkpoints can provide a **overview about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**. (I also found myself using it instead of simple debugging, too.)  
 
 Download
 ----------
