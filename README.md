@@ -20,12 +20,18 @@ It can log
 ----------
 
 * the **thread name**
-* the **object instance** (its `toString()` value)
+* the **!! object instance !!** (its `toString()` value)
 * the **method name**
 * the **stacktrace** at the place of the call (the method depth is configurable)
 * **variable values** conveniently
 * the **time elapsed** since a start call
-* an extra **comment**
+* an extra **comment**  
+
+Motivation
+----------
+Android Investigator is not intended as a production logging solution but as a handy little tool for bugfixing and investigation, kept available on the debug classpath (or even commented out in gradle).  
+**Logging the object instance** (not just the class) **is the extra** that it does compared to other logging libraries. I found it useful in many situations (configuration changes, fragment transactions, checking DI scopes, etc).  
+It is also **simple and convenient to use**: 
 
 
 More sample usage
@@ -33,7 +39,7 @@ More sample usage
 ```
 D/Investigator: [main] SampleLogActivity@a21b74.onCreate()												<- Investigator.log(this)
 
-D/Investigator: [main] SampleLogActivity@a21b74.onCreate() | some comment								<- Investigator.log(this, "some comment")
+D/Investigator: [main] SampleLogActivity@a21b74.onCreate() | comment								    <- Investigator.log(this, "comment")
 
 D/Investigator: [main] SampleLogActivity@a21b74.onStart() | name = John									<- Investigator.log(this, "name", name)
 
@@ -47,14 +53,13 @@ D/Investigator: [AsyncTask 2] MyAsyncTask@ad03c5e.doInBackground()										<- I
 D/Investigator: [main] SampleLogActivity@a21b74.onPause() | 0 ms (STOPWATCH STARTED)					<- Investigator.startStopWatch(this);
 D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- Investigator.log(this);
 ```
-*Tag*, stacktrace *method depth*, *thread* on/off, and *log level* are customizable through the fields of the class.
+Tag, stacktrace method depth, thread name, and log level are customizable through the fields of the class.
 (Check out [the class][TheClass] itself or the [javadoc][JavaDoc].)
 
 When is it useful?
 ----------------------
 It can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity.
-Adding a few simple Investigator log calls to checkpoints can provide a **quick overview about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**.  
-(I also found myself using it instead of simple debugging, too.)  
+Adding a few simple Investigator log calls to checkpoints can provide a **quick overview about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**. (I also found myself using it instead of simple debugging, too.)  
 
 Download
 ----------
