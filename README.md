@@ -61,6 +61,8 @@ When is it useful?
 It can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity.
 Adding a few simple Investigator log calls to checkpoints can provide a **overview about the order of the events, the object instances in play, variable values, where the watched method is called from, and on which thread**. (I also found myself using it instead of simple debugging, too.)  
 
+Note: The Investigator log calls usually take under 1 ms to complete so it shouldn’t be disruptive to the normal program flow.
+
 Download
 ----------
 Android Investigator is available in [Maven Central][MavenSearch].  
@@ -71,7 +73,7 @@ dependencies {
     debugCompile 'com.github.lemonboston:android-investigator:0.1.1'
 }
 ```
-Or, since it is a single java class, it can also be grabbed from [here][TheClass] and added to the project (possibly under src/debug/java).
+Or, since it is a single java class, it can be grabbed from [here][TheClass] and added to the project (possibly under src/debug/java).
 
 [TheClass]: /AndroidInvestigatorSample/android-investigator/src/main/java/gk/android/investigator/Investigator.java
 [JavaDoc]: http://www.javadoc.io/doc/com.github.lemonboston/android-investigator/
