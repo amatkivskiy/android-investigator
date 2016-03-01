@@ -59,7 +59,7 @@ Tag, default stacktrace method depth, thread name, and log level are customizabl
 When is it useful?
 ----------------------
 It can be most useful when debugging is not effective any more because there are too many checkpoints to step through or there is asynchronicity.
-Adding a few simple Investigator log calls to checkpoints can provide a **overview about the order of the events, the object instances in play, variable values, where our code is called from, and on which thread**. (I also found myself using it instead of simple debugging, too.)  
+Adding a few simple Investigator log calls to checkpoints can provide a **overview about the order of the events, the object instances in play, variable values, where the watched method is called from, and on which thread**. (I also found myself using it instead of simple debugging, too.)  
 
 Download
 ----------
