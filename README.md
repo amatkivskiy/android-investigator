@@ -8,7 +8,7 @@ A simple tool that can be used to quickly add **informative debug logs** to the 
 @Override
 public void onResume() {
     Investigator.log(this);
-    // code
+    ...
 }
 ```
 log:
