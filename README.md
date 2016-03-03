@@ -38,21 +38,19 @@ It is also **simple and convenient to use**:
 More sample usage
 --------------------
 ```
-D/Investigator: [main] SampleLogActivity@a21b74.onCreate()												<- Investigator.log(this)
+D/Tag: [main] MyActivity@a21b74.onCreate()								<- Investigator.log(this)
 
-D/Investigator: [main] SampleLogActivity@a21b74.onCreate() | comment								    <- Investigator.log(this, "comment")
+D/Tag: [thread-5] MyTask@b45e01.process() | comment				    	<- Investigator.log(this, "comment")
 
-D/Investigator: [main] SampleLogActivity@a21b74.onStart() | name = John									<- Investigator.log(this, "name", name)
+D/Tag: [main] MyActivity@a21b74.onStart() | age = 32					<- Investigator.log(this, "age", age)
 
-D/Investigator: [main] SampleLogActivity@a21b74.onStart() | pi = 3.14 | days = [Mon, Tue, Wed]			<- Investigator.log(this, "pi", pi, "days", days);
+D/Tag: [main] MyAsyncTask@3a8ed48.onPostExecute()						<- Investigator.log(this, 3);
+				at sample.MyAsyncTask.onPostExecute(MyAsyncTask.java:10)
+				at android.os.AsyncTask.finish(AsyncTask.java:651)
+				at android.os.AsyncTask.-wrap1(AsyncTask.java)
 
-D/Investigator: [AsyncTask 2] MyAsyncTask@ad03c5e.doInBackground()										<- Investigator.log(this, 3);
-                    at gk.android.investigator.sample.MyAsyncTask.doInBackground(MyAsyncTask.java:10)
-                    at android.os.AsyncTask$2.call(AsyncTask.java:295)
-                    at java.util.concurrent.FutureTask.run(FutureTask.java:237)                    
-
-D/Investigator: [main] SampleLogActivity@a21b74.onPause() | 0 ms (STOPWATCH STARTED)					<- Investigator.startStopWatch(this);
-D/Investigator: [main] SampleLogActivity@a21b74.onDestroy() | 344 ms									<- Investigator.log(this);
+D/Tag: [main] MyActivity@a21b74.onPause() | 0 ms (STOPWATCH STARTED)	<- Investigator.startStopWatch(this);
+D/Tag: [main] MyActivity@a21b74.onDestroy() | 344 ms					<- Investigator.log(this);
 ```
 Tag, default stacktrace method depth, thread name, and log level are customizable through the fields of the class. (Check out [the class][TheClass] itself or the [javadoc][JavaDoc].)
 
