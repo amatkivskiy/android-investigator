@@ -23,7 +23,7 @@ Easy or automatic logging of the followings at the place of the call:
 * the **thread name**
 * the **!! object instance !!** (its `toString()` value)
 * the **method name**
-* the **stacktrace** (method depth is configurable)
+* the **stacktrace** (for custom method depth)
 * **variable values** conveniently
 * the **time elapsed** since a start call
 * an extra **comment**  
