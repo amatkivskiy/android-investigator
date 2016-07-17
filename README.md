@@ -1,5 +1,6 @@
 Android Investigator
 ====================
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-android--investigator-green.svg?style=true)](https://android-arsenal.com/details/1/3285)
 
 A simple tool that can be used to quickly add **informative debug logs** to the code during investigation without typing much:  
 
