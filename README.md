@@ -73,6 +73,10 @@ dependencies {
 ```
 Or, since it is a single java class, it can be grabbed from [here][TheClass] and added to the project (possibly under src/debug/java).
 
+License
+----------
+MIT License - Copyright (c) 2016 Gabor Keszthelyi
+
 [TheClass]: /AndroidInvestigatorSample/android-investigator/src/main/java/gk/android/investigator/Investigator.java
 [JavaDoc]: http://www.javadoc.io/doc/com.github.lemonboston/android-investigator/
 [MavenSearch]: http://search.maven.org/#search%7Cga%7C1%7Clemonboston%20android-investigator
